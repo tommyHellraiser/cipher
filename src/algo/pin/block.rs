@@ -8,10 +8,11 @@ use std::fmt::Write;
 const BLOCK_LENGTH: usize = 16;
 
 /// Calculates the PIN blokc for a given set of inputs
-pub fn calculate_pin_block(
+pub fn calculate_clear_pin_block(
     pin: String,
     pan: String,
-    /* key: String,  */ filler: PinBlockFiller,
+    /* key: String,  */
+    filler: PinBlockFiller,
 ) -> CipherResult<String> {
     //  Attempt to parse the pin into a number to verify it's a valid PIN
     if pin.chars().any(|item| !item.is_ascii_digit()) {
@@ -109,7 +110,7 @@ mod test {
     use crate::algo::pin::block::build_pin_block_2;
     use crate::algo::pin::block::PinBlockFiller;
 
-    use super::calculate_pin_block;
+    use super::calculate_clear_pin_block;
 
     #[test]
     fn test_pin_block_1() {
@@ -128,7 +129,7 @@ mod test {
         let pan = "4564325134571357".to_string();
         let pin = "2511".to_string();
 
-        let output = calculate_pin_block(pin, pan, PinBlockFiller::F).unwrap();
+        let output = calculate_clear_pin_block(pin, pan, PinBlockFiller::F).unwrap();
 
         assert_eq!(output.as_str(), "042552DAECBA8ECA")
     }
